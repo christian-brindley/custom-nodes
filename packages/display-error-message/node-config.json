@@ -1,0 +1,21 @@
+{
+  "_id": "displayerrormessage-2",
+  "displayName": "Display Error Message",
+  "description": "My node",
+  "errorOutcome": false,
+  "inputs": [],
+  "outcomes": ["outcome"],
+  "outputs": [],
+  "properties": {
+    "clearError": {
+      "description": "Clear message from shared state after displaying",
+      "multivalued": false,
+      "required": false,
+      "title": "Clear Error",
+      "type": "BOOLEAN",
+      "defaultValue": true
+    }
+  },
+  "serviceName": "displayerrormessage",
+  "tags": []
+}

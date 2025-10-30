@@ -1,0 +1,23 @@
+{
+  "name": "custom-nodes",
+  "version": "1.0.0",
+  "type": "module",
+  "devDependencies": {
+    "esbuild": "^0.25.11",
+    "typescript": "^5.0.0",
+    "dotenv": "^16.4.5",
+    "jose": "^5.2.0",
+    "acorn": "^8.14.0",
+    "axios": "^1.11.0",
+    "uuid": "^10.0.0",
+    "qs": "^6.11.0",
+    "node-jose": "^2.1.1"
+  },
+  "scripts": {
+    "build": "node scripts/bundle.js",
+    "push": "node scripts/push.js",
+    "deploy": "node scripts/deploy.js",
+    "create": "node scripts/create-node.js",
+    "clean": "rm -rf packages/*/dist"
+  }
+}
