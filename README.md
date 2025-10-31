@@ -8,6 +8,11 @@ This repository includes tools for developing and distributing custom nodes for 
 
 ## Building an example node
 
+Build an example node which displays a message via a text output callback - i.e. a form field on a journey page. The node is configured with:
+
+- The fixed message text to display
+- The message level: Info, Warning or Error.
+
 ### Step 1: Clone the repo and install dependencies
 
 ```
@@ -18,7 +23,7 @@ npm i
 
 ### Step 2: Create a node
 
-For example, create a new node `display-message`:
+Create a new node `display-message`:
 
 ```
 git checkout -b node-display-message
@@ -39,16 +44,15 @@ packages
 
 ### Step 3: Configure the node
 
-Update `node-config.json` with the basic configuration. Update the following properties.
+Update `node-config.json` with the basic configuration. Update the following properties:
 
-- `displayName`
-- `description`
-- `properties`
+- `displayName` - The name shown in the journey designer
+- `description` - A description for the node
+- `properties` - The node's configurable properties
 
-This node will display a message via a text callback. Configuration properties for the node include:
+Leave all other properties as their defaults.
 
-- The fixed message text to display
-- The message level: Info, Warning or Error.
+Example `node-config.json`:
 
 ```
 {
