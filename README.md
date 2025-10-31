@@ -178,4 +178,4 @@ To perform signatures, the `SIGNER_KEY` property in the `.env` file must be set 
 
 ### script
 
-The TypeScript node script source is converted to Ping friendly JavaScript, with all imports expanded in line.
+The node script is converted from TypeScript simple JavaScript, with all imports expanded in line with the script.
