@@ -36,7 +36,7 @@ if (!/^[a-z-]+$/.test(packageName)) {
 const packageDir = `packages/${packageName}`;
 
 if (fs.existsSync(packageDir)) {
-  console.error(`Package already exists in ${dirPath}`);
+  console.error(`Error: package already exists in ${packageDir}`);
   process.exit(1);
 }
 

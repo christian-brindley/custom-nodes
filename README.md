@@ -6,7 +6,7 @@ Helper tools for building and distributing Ping AM custom nodes.
 
 This repository includes tools for developing and distributing custom nodes for Ping AM v8+ and PingOne Advanced Identity Cloud. Refer to the [Ping documentation](https://docs.pingidentity.com/pingoneaic/latest/journeys/node-designer.html) for further details on custom nodes.
 
-## Building a node
+## Building an example node
 
 ### Step 1: Clone the repo and install dependencies
 
@@ -16,10 +16,12 @@ cd custom-nodes
 npm i
 ```
 
-### Step 2: create a starter node called `display-message`
+### Step 2: Create a node
+
+For example, create a new node `display-message`:
 
 ```
-git checkout -b display-message-node
+git checkout -b node-display-message
 npm run create display-message
 ```
 
@@ -37,16 +39,16 @@ packages
 
 ### Step 3: Configure the node
 
-This node will display a message via a text callback. The node will allow configuration with
-
-- Fixed message text
-- Message level: Info, Warning or Error.
-
 Update `node-config.json` with the basic configuration. Update the following properties.
 
 - `displayName`
 - `description`
 - `properties`
+
+This node will display a message via a text callback. Configuration properties for the node include:
+
+- The fixed message text to display
+- The message level: Info, Warning or Error.
 
 ```
 {
@@ -114,7 +116,7 @@ There are two ways you can deploy the node into your Ping environment
 
 - Build a JSON import file and import manually via the Ping admin console
 
-- Build and deploy directly into the Ping environment via REST
+- Push the node directly into the Ping environment via REST
 
 #### Importing manually
 
@@ -124,7 +126,7 @@ npm run build display-message
 
 This creates an import file `packages/display-message/dist/display-message.1.0.0.json` which you can import via the admin console. Note that in order to update the node, you need to remove it before re-importing.
 
-#### Deploying directly via REST (PingOne AIC only)
+#### Pushing directly via REST (PingOne AIC only)
 
 First, configure your environment details
 
@@ -132,10 +134,44 @@ First, configure your environment details
 cp .env.sample .env
 ```
 
-Edit `.env` with your Ping environment URL and service account credentials.
+Edit `.env` with your Ping environment URL and service account credentials - i.e.
 
-Now build and push the node in one step
+- TENANT_BASE_URL
+- SERVICE_ACCOUNT_ID
+- SERVICE_ACCOUNT_CLIENT_ID
+- SERVICE_ACCOUNT_SCOPE
+- SERVICE_ACCOUNT_KEY
+
+Now deploy the node into your environment
 
 ```
 npm run deploy display-message
 ```
+
+This will build the JSON import file as before, then push the node config via REST.
+
+## Build processing
+
+When building the node using `npm run build` or `npm run deploy`, the node configuration is processed as follows:
+
+### outcomes
+
+The `outcomes` property of the node is updated to match the `nodeOutcomes` declaration in the node script. If there is no `nodeOutcomes` declaration, the build throws an error.
+
+### tags
+
+A tag is added to the node configuration, with the version number from the `package.json` file in the package directory. Dots are replaced with underscores - e.g. if `package.json` includes `"version": "1.0.0"` then the builder will add tag `version_1_0_0`.
+
+### nodeVersion
+
+The property `nodeVersion` is added to the metadata in the JSON import file, with the version from `package.json`.
+
+### signature
+
+The property `signature` is added to the metadata in the JSON import file, with a signature in the form of a detached JWT (RFC 7797). The signature is applied to the node object within the JSON import - i.e. the object under `nodeTypes["displaymessage-1"]` in the example node.
+
+A signature is only applied if a signer key is configured via the `SIGNER_KEY` property in the `.env` file.
+
+### script
+
+The TypeScript node script source is converted to Ping friendly JavaScript, with all imports expanded in line.
