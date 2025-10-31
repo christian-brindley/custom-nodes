@@ -1,1 +1,5 @@
-export const MESSAGE_LEVEL = { INFO: 1, WARNING: 2, ERROR: 3 };
+export const MESSAGE_LEVEL = {
+  INFO: 0,
+  WARNING: 1,
+  ERROR: 2,
+};
