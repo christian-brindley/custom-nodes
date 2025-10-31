@@ -152,7 +152,7 @@ Now deploy the node into your environment
 npm run deploy display-message
 ```
 
-This will build the JSON import file as before, then push the node config via REST.
+This will build the JSON import file as before, then push the node config via REST. The node may be modified and pushed again with the same command to update the installed version.
 
 ## Build processing
 
