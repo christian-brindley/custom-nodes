@@ -172,9 +172,9 @@ The property `nodeVersion` is added to the metadata in the JSON import file, wit
 
 ### signature
 
-The property `signature` is added to the metadata in the JSON import file, with a signature in the form of a detached JWT (RFC 7797). The signature is applied to the node object within the JSON import - i.e. the object under `nodeTypes["displaymessage-1"]` in the example node.
+If the `SIGN` property in the `.env` file is set to `true`, the property `signature` is added to the metadata in the JSON import file: the value of this property is an RFC 7797 detached JWT. The signature is applied to the node object within the JSON import - i.e. the object under `nodeTypes["displaymessage-1"]` in the example node.
 
-A signature is only applied if a signer key is configured via the `SIGNER_KEY` property in the `.env` file.
+To perform signatures, the `SIGNER_KEY` property in the `.env` file must be set to a private key JWK.
 
 ### script
 

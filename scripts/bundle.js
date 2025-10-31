@@ -69,7 +69,7 @@ async function signDetachedJwt(payload, privateJwkJson, alg = "RS256") {
   return `${encodedHeader}..${signature}`;
 }
 
-async function buildImport(node, version, signerKey) {
+async function buildImport(node, version, sign, signerKey) {
   return {
     meta: {
       amVersion: null,
@@ -78,7 +78,7 @@ async function buildImport(node, version, signerKey) {
       exportedBy: null,
       resourceVersion: "1.0",
       nodeVersion: version,
-      signature: signerKey ? await signDetachedJwt(node, signerKey) : null,
+      signature: sign ? await signDetachedJwt(node, signerKey) : null,
     },
     nodeTypes: { [node._id]: node },
   };
@@ -124,7 +124,8 @@ async function bundlePackage(pkgName) {
   node.tags.push(`version_${pkg.version.replaceAll(/\./g, "_")}`);
   node.outcomes = nodeOutcomes;
   const signerJwk = process.env.SIGNER_KEY;
-  const importJson = await buildImport(node, pkg.version, signerJwk);
+  const sign = process.env.SIGN === "true";
+  const importJson = await buildImport(node, pkg.version, sign, signerJwk);
   fs.writeFileSync(outFile, JSON.stringify(importJson, null, 2), "utf8");
 }
 
