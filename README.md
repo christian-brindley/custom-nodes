@@ -98,7 +98,7 @@ Update `display-message.ts` with the node logic - e.g.
 import { execNode } from "@imports/common/node-base";
 import { MESSAGE_LEVEL } from "@imports/common/constants";
 
-var nodeOutcomes = {
+const nodeOutcomes = {
   COMPLETED: "completed",
 };
 
