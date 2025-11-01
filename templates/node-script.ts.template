@@ -1,6 +1,6 @@
 import { execNode } from "@imports/common/node-base";
 
-var nodeOutcomes = {
+const nodeOutcomes = {
   COMPLETED: "completed",
 };
 
