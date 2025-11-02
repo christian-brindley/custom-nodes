@@ -1,0 +1,21 @@
+{
+  "_id": "stringcollector-1",
+  "displayName": "Node Name",
+  "description": "Description",
+  "errorOutcome": false,
+  "inputs": [],
+  "outcomes": [],
+  "outputs": [],
+  "properties": {
+    "propertyOne": {
+      "description": "This is a sample property",
+      "multivalued": false,
+      "required": false,
+      "title": "Property One",
+      "type": "String",
+      "defaultValue": "Default Value"
+    }
+  },
+  "serviceName": "stringcollector",
+  "tags": []
+}

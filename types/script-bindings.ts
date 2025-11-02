@@ -7,15 +7,40 @@ declare const action: {
   goTo: (outcome: string) => void;
 };
 
-declare const callbacksBuilder: {
-  textOutputCallback: (level: number, message: string) => void;
-  stringAttributeInputCallback: (
-    id: string,
-    label: string,
+interface StringAttributeInputCallbackBuilder {
+  (name: string, prompt: string, value: string, required: boolean): void;
+
+  (
+    name: string,
+    prompt: string,
     value: string,
     required: boolean,
     failedPolicies: string[]
-  ) => void;
+  ): void;
+
+  (
+    name: string,
+    prompt: string,
+    value: string,
+    required: boolean,
+    polcies: any,
+    validateOnly: boolean
+  ): void;
+
+  (
+    name: string,
+    prompt: string,
+    value: string,
+    required: boolean,
+    polcies: any,
+    validateOnly: boolean,
+    failedPolicies: string[]
+  ): void;
+}
+
+declare const callbacksBuilder: {
+  textOutputCallback: (level: number, message: string) => void;
+  stringAttributeInputCallback: StringAttributeInputCallbackBuilder;
 };
 
 declare const properties: any;
@@ -33,4 +58,8 @@ declare const nodeState: {
 declare const callbacks: {
   isEmpty: () => boolean;
   getStringAttributeInputCallbacks: () => any;
+};
+
+declare const idRepository: {
+  getIdentity: (userId: string) => any;
 };
