@@ -11,7 +11,7 @@ This repository includes tools for developing and distributing custom nodes for 
 Build an example node which displays a message via a text output callback - i.e. a form field on a journey page. The node is configured with:
 
 - The fixed message text to display
-- The message level: Info, Warning or Error.
+- The message level: INFO, WARNING or ERROR.
 
 ### Step 1: Clone the repo and install dependencies
 
