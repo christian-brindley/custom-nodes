@@ -23,7 +23,7 @@ interface StringAttributeInputCallbackBuilder {
     prompt: string,
     value: string,
     required: boolean,
-    polcies: any,
+    policies: any,
     validateOnly: boolean
   ): void;
 
@@ -32,7 +32,7 @@ interface StringAttributeInputCallbackBuilder {
     prompt: string,
     value: string,
     required: boolean,
-    polcies: any,
+    policies: any,
     validateOnly: boolean,
     failedPolicies: string[]
   ): void;
@@ -50,8 +50,8 @@ declare const nodeState: {
   get: (property: string) => any;
   getObject: (property: string) => any;
   putShared: (property: string, value: any) => void;
-  mergeShared: (property: string, value: any) => void;
-  mergeTransient: (property: string, value: any) => void;
+  mergeShared: (value: any) => void;
+  mergeTransient: (value: any) => void;
   putTransient: (property: string, value: any) => void;
 };
 
@@ -62,4 +62,18 @@ declare const callbacks: {
 
 declare const idRepository: {
   getIdentity: (userId: string) => any;
+};
+
+declare const existingSession: {
+  get: (sessionProperty: string) => any;
+};
+
+declare const requestHeaders: {
+  get: (headerName: string) => any;
+};
+
+declare const realm: string;
+
+declare const httpClient: {
+  send: (url: string, options: any) => any;
 };
