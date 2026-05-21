@@ -1,4 +1,6 @@
 import esbuild, { build } from "esbuild";
+import { transformAsync } from "@babel/core";
+
 import fs from "fs";
 import path from "path";
 import { CompactSign, importJWK } from "jose";
@@ -101,21 +103,51 @@ async function bundlePackage(pkgName) {
   console.log(`Bundling node: ${pkgName}`);
   console.log(` Output: ${outFile}`);
 
+  // const result = await esbuild.build({
+  //   entryPoints: [srcFile],
+  //   bundle: true,
+  //   platform: "node",
+  //   format: "cjs",
+  //   target: ["ES5"],
+  //   write: false,
+  // });
+
+  // Step 1: Bundle with esbuild (modern JS)
   const result = await esbuild.build({
     entryPoints: [srcFile],
     bundle: true,
-    platform: "node",
-    format: "esm",
-    target: ["es2020"],
+    target: "es2017", // modern target for esbuild
+    format: "cjs", // CommonJS
+    platform: "neutral",
     write: false,
   });
 
-  const script = result.outputFiles[0].text;
+  let script = result.outputFiles[0].text;
+
+  // Step 2: Transpile to ES5 using Babel
+  const babelResult = await transformAsync(script, {
+    presets: [
+      [
+        "@babel/preset-env",
+        {
+          targets: {
+            ie: "11", // ES5-compatible target (works in Rhino)
+          },
+          modules: "commonjs", // convert ES modules to CommonJS
+        },
+      ],
+    ],
+    sourceType: "script",
+  });
+
+  script = babelResult?.code ?? script; // use transformed code
+
+  // console.log(script);
 
   const nodeOutcomes = getNodeOutcomes(script, NODE_OUTCOMES_VAR);
   if (!nodeOutcomes) {
     throw new Error(
-      `No node outcomes declaration in script: expecting ${NODE_OUTCOMES_VAR}`
+      `No node outcomes declaration in script: expecting ${NODE_OUTCOMES_VAR}`,
     );
   }
 
