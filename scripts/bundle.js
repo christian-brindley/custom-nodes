@@ -103,15 +103,6 @@ async function bundlePackage(pkgName) {
   console.log(`Bundling node: ${pkgName}`);
   console.log(` Output: ${outFile}`);
 
-  // const result = await esbuild.build({
-  //   entryPoints: [srcFile],
-  //   bundle: true,
-  //   platform: "node",
-  //   format: "cjs",
-  //   target: ["ES5"],
-  //   write: false,
-  // });
-
   // Step 1: Bundle with esbuild (modern JS)
   const result = await esbuild.build({
     entryPoints: [srcFile],
